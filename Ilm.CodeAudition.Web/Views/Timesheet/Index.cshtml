@@ -1,0 +1,55 @@
+﻿@{
+    ViewBag.Title = "Timesheet";
+}
+
+<div class="alert alert-@TempData["FlashClass"]">
+    @TempData["FlashMessage"]
+</div>
+<form id="timesheet-form" data-bind="submit: saveTimesheets">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ProjectB</th>
+                <th>Mon</th>
+                <th>Tue</th>
+                <th>Wed</th>
+                <th>Thu</th>
+                <th>Fri</th>
+                <th>Total</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody class="timesheet">
+            <!-- ko foreach: timesheets -->
+            <tr>
+                <td>
+                    <select class="required" data-bind="options: $parent.projects, 
+                                       optionsText: 'Name', 
+                                       value: Project, 
+                                       optionsCaption: 'Choose...'"></select>
+                </td>
+                <td><input type="text" data-bind="value: Monday" /></td>
+                <td><input type="text" data-bind="value: Tuesday" /></td>
+                <td><input type="text" data-bind="value: Wednesday" /></td>
+                <td><input type="text" data-bind="value: Thursday" /></td>
+                <td><input type="text" data-bind="value: Friday" /></td>
+                <td><span data-bind="text: Total"></span></td>
+                <td><a href="#" data-bind="click: $parent.removeTimesheet">Delete</a></td>
+            </tr>
+            <!-- /ko -->
+            <tr>
+                <td colspan="6" align="right">Grand Total: </td>
+                <td><span data-bind="text: grandTotal"></span></td>
+            </tr>
+        </tbody>
+    </table>
+    <button class="btn btn-primary" data-bind="click: addNewTimesheet">New</button>
+    <input class="btn btn-primary" type="submit" value="Save" data-bind="enable: hasUnsavedChanges()" />
+</form>
+<br />
+@Html.ActionLink("Back", "Index", "Employee")
+<script type="text/javascript" src="@Url.Content("~/Scripts/Timesheet.js")"></script>
+<script type="text/javascript">
+TimesheetApp.start( @Html.Raw(Json.Encode(Model)) );
+</script>

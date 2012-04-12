@@ -1,0 +1,9 @@
+﻿.timesheet input[type="text"] {
+    width: 25px;
+}
+
+input.error, select.error, td.error, span.error {
+    border: 1px solid red;
+    background-color: #FF8C8C;
+    color: red;
+}
