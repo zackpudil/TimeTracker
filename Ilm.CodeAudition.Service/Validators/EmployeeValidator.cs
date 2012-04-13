@@ -13,7 +13,7 @@ namespace Ilm.CodeAudition.Service.Validators
     {
         public EmployeeValidator()
         {
-            RuleFor(employee => employee.Timesheets.Sum(x => x.Total)).LessThanOrEqualTo(40).WithName("GrandTotal");
+            RuleFor(employee => employee.Timesheets.Sum(x => x.Total)).GreaterThanOrEqualTo(40).WithName("GrandTotal");
         }
     }
 }

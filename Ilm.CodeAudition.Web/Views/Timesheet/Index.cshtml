@@ -5,6 +5,12 @@
 <div class="alert alert-@TempData["FlashClass"]">
     @TempData["FlashMessage"]
 </div>
+<div class="alert alert-error" data-bind="visible: !isValid()">
+    <p data-bind="visible: hasTotalErrors()">You can't have a timesheet with a project and no hours on it.</p>
+    <p data-bind="visible: !grandTotalIsValid()">You need to work more than 40 hours a week.  WORK HARDER!!</p>
+</div>
+    
+</div>
 <form id="timesheet-form" data-bind="submit: saveTimesheets">
     <table class="table table-striped">
         <thead>
@@ -22,11 +28,12 @@
         </thead>
         <tbody class="timesheet">
             <!-- ko foreach: timesheets -->
-            <tr>
+            <tr data-bind="css: { error: !isValid() }">
                 <td>
-                    <select class="required" data-bind="options: $parent.projects, 
+                    <select class="required" data-bind="options: avaliableProjects, 
                                        optionsText: 'Name', 
-                                       value: Project, 
+                                       optionsValue: 'Id',
+                                       value: Project.Id, 
                                        optionsCaption: 'Choose...'"></select>
                 </td>
                 <td><input type="text" data-bind="value: Monday" /></td>
@@ -41,11 +48,12 @@
             <tr>
                 <td colspan="6" align="right">Grand Total: </td>
                 <td><span data-bind="text: grandTotal"></span></td>
+                <td><span data-bind="visible: !grandTotalIsValid()">Work HARDER!</span></td>
             </tr>
         </tbody>
     </table>
     <button class="btn btn-primary" data-bind="click: addNewTimesheet">New</button>
-    <input class="btn btn-primary" type="submit" value="Save" data-bind="enable: hasUnsavedChanges()" />
+    <input class="btn btn-primary" type="submit" value="Save" data-bind="enable: hasUnsavedChanges() && isValid()" />
 </form>
 <br />
 @Html.ActionLink("Back", "Index", "Employee")
