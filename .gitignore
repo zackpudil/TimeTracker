@@ -13,3 +13,7 @@ deploy/*
 *.bak
 packages/
 msbuild.log
+_UpgradeReport_Files
+UpgradeLog.htm
+UpgradeLog.XML
+Backup/
